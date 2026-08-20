@@ -69,6 +69,40 @@ core/models/
 如果 `ha.input_mode` 使用 `xiaoai_asr`（复用音箱原生识别），则不需要
 Paraformer ASR 模型，但仍需要 VAD + KWS 模型。
 
+#### 下载方式
+
+**VAD + KWS 模型**（`silero_vad.onnx`、`encoder.onnx`、`decoder.onnx`、
+`joiner.onnx`、`tokens.txt`、`bpe.model`）：
+
+```bash
+# 从 open-xiaoai-bridge 的 release 下载并解压到 core/models/
+curl -L -o /tmp/models.zip https://github.com/coderzc/open-xiaoai-bridge/releases/download/vad-kws-asr-models/models.zip
+unzip -o /tmp/models.zip -d core/models/ && rm /tmp/models.zip
+```
+
+> 使用 `./scripts/start.sh` 启动时，缺失的 VAD + KWS 模型会自动下载。
+
+**Paraformer ASR 模型**（`local_asr` 模式必需，约 217MB）：
+
+```bash
+mkdir -p core/models/sherpa-onnx-paraformer-zh-2024-03-09
+
+# 国内推荐（hf-mirror）
+curl -L -o core/models/sherpa-onnx-paraformer-zh-2024-03-09/model.int8.onnx \
+  https://hf-mirror.com/csukuangfj/sherpa-onnx-paraformer-zh-2024-03-09/resolve/main/model.int8.onnx
+curl -L -o core/models/sherpa-onnx-paraformer-zh-2024-03-09/tokens.txt \
+  https://hf-mirror.com/csukuangfj/sherpa-onnx-paraformer-zh-2024-03-09/resolve/main/tokens.txt
+```
+
+或从 GitHub release 下载整包后解压，把 `sherpa-onnx-paraformer-zh-2024-03-09/`
+目录放进 `core/models/`：
+
+```
+https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-paraformer-zh-2024-03-09.tar.bz2
+```
+
+> Paraformer 模型不会自动下载，需按上述方式手动放置；`xiaoai_asr` 模式可跳过。
+
 ### 🐳 Docker Compose（推荐）
 
 仓库包含 `Dockerfile` 与 `docker-compose.yml`。由于 native 扩展通过

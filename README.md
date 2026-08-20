@@ -65,12 +65,6 @@
   自主播报等复杂任务，适合把音箱接入完整 Agent 工作流的用户；
 - **更通用**：不依赖 Home Assistant，没有 HA 的用户也能用。
 
-**怎么选**
-
-- 用 Home Assistant 控制家居、想开箱即用 → 本项目；
-- 需要多 AI 后端或 Agent 化能力 → 直接用
-  [open-xiaoai-bridge](https://github.com/coderzc/open-xiaoai-bridge)。
-
 ## 🙏 致谢
 
 本项目由以下开源项目启发/改造而来：
