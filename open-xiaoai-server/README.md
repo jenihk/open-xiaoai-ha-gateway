@@ -218,7 +218,7 @@ APP_CONFIG = {
         "tts_speaker": "zh_male_liangsangmengzai_uranus_bigtts",  # 或 "xiaoai"
         "session_tts_speakers": {
             "conversation.hai_mian_bao_bao": "zh_male_liangsangmengzai_uranus_bigtts",
-            "conversation.pai_da_xing": "zh_female_vv_uranus_bigtts",
+            "conversation.ni_hao_xiao_wei": "zh_female_vv_uranus_bigtts",
         },
         "rule_prompt": "注意：将结果处理成纯文字版，不要返回任何 markdown 格式，也不要包含任何代码块，并将字数控制在100字以内",
     },
@@ -242,7 +242,7 @@ HA「开发者工具 → 动作 → conversation.process」里查询。
 ```python
 AGENT_ROUTES = {
     "海绵宝宝": "conversation.hai_mian_bao_bao",
-    "派大星": "conversation.pai_da_xing",
+    "你好小薇": "conversation.ni_hao_xiao_wei",
 }
 
 async def before_wakeup(speaker, text, source, app):
@@ -274,7 +274,7 @@ async def before_wakeup(speaker, text, source, app):
   ```python
   "session_tts_speakers": {
       "conversation.hai_mian_bao_bao": "zh_male_liangsangmengzai_uranus_bigtts",
-      "conversation.pai_da_xing": "zh_female_vv_uranus_bigtts",
+      "conversation.ni_hao_xiao_wei": "zh_female_vv_uranus_bigtts",
   },
   ```
 

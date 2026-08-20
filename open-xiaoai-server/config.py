@@ -4,7 +4,7 @@
 # 不同唤醒词进入不同 agent 的对话，多轮上下文互相隔离。
 AGENT_ROUTES = {
     "海绵宝宝": "conversation.hai_mian_bao_bao",
-    "派大星": "conversation.pai_da_xing",
+    "你好小薇": "conversation.ni_hao_xiao_wei",
 }
 
 
@@ -74,7 +74,7 @@ APP_CONFIG = {
         # 建议使用与「小爱同学」不同的自定义词，避免和音箱原生唤醒冲突
         "keywords": [
             "海绵宝宝",
-            "派大星",
+            "你好小薇",
         ],
         # 连续对话中静音多久后自动退出（秒）：
         # 用户说完一句后，在这个时间内没有继续说话就自动结束对话。
@@ -171,7 +171,7 @@ APP_CONFIG = {
         # 示例：{"conversation.assistant": "zh_female_vv_uranus_bigtts"}
         "session_tts_speakers": {
             "conversation.hai_mian_bao_bao": "zh_male_liangsangmengzai_uranus_bigtts",
-            "conversation.pai_da_xing": "zh_female_vv_uranus_bigtts",
+            "conversation.ni_hao_xiao_wei": "zh_female_vv_uranus_bigtts",
         },
         # 追加到每条发送给 HA 的消息末尾的提示词
         "rule_prompt": "注意：将结果处理成纯文字版，不要返回任何 markdown 格式，也不要包含任何代码块，并将字数控制在100字以内",
