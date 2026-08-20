@@ -1,0 +1,30 @@
+[package]
+name = "open_xiaoai_server"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+name = "open_xiaoai_server"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.24.0", features = ["extension-module", "abi3-py38"] }
+pyo3-async-runtimes = { version = "0.24", features = [
+    "attributes",
+    "tokio-runtime",
+] }
+# 本地开发：直接使用仓库内的 open-xiaoai-client 源码，避免克隆 GitHub 仓库超时。
+# Docker 构建时保持 open-xiaoai-client 与 open-xiaoai-server 同级（仓库根），
+# 构建上下文为仓库根目录，因此无需改为 git 源。
+open-xiaoai = { path = "../../open-xiaoai-client" }
+tokio = { version = "1.32.0", features = ["full"] }
+tokio-tungstenite = "0.26.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# TTS streaming dependencies
+reqwest = { version = "0.12", default-features = false, features = ["stream", "rustls-tls", "json"] }
+tokio-util = { version = "0.7", features = ["io"] }
+tokio-stream = "0.1"
+symphonia = { version = "0.5", features = ["mp3", "ogg", "vorbis", "pcm", "wav"] }
+base64 = "0.22"

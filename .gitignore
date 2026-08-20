@@ -1,0 +1,29 @@
+# Python
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.mypy_cache
+
+# Rust
+target
+Cargo.lock
+
+# IDE
+.idea
+.vscode
+.codex
+
+# Models（体积大，按 README 说明自行准备）
+core/models/
+
+# 本地环境
+.env
+.env.local
+config-local.py
+
+# Misc
+.DS_Store
+*.log
+tests/*.wav

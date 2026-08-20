@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+.venv
+**/.venv
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.mypy_cache
+
+# Rust 构建产物
+**/target
+
+# IDE
+.idea
+.vscode
+.codex
+
+# 模型文件较大，不打进镜像，通过 docker-compose 挂载
+**/core/models/
+
+# 文档 / 测试 / 杂项
+**/docs/
+**/tests/
+.DS_Store
+*.log

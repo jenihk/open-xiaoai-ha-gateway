@@ -1,0 +1,26 @@
+services:
+  open-xiaoai-ha-gateway:
+    # 构建上下文必须为仓库上一级（code/），因为 native 扩展依赖
+    # 本地 open-xiaoai-client 源码（path 依赖），详见 README。
+    build:
+      context: ..
+      dockerfile: open-xiaoai-server/Dockerfile
+    image: open-xiaoai-ha-gateway:latest
+    container_name: open-xiaoai-ha-gateway
+    restart: unless-stopped
+    ports:
+      - "4399:4399" # 音箱 Client WebSocket（必需）
+      - "9092:9092" # HTTP API（可选）
+    environment:
+      - LOGLEVEL=INFO # 日志级别：DEBUG, INFO, WARNING, ERROR, CRITICAL
+      - HA_ENABLE=1 # 启用 Home Assistant 集成（默认启用）
+      - API_SERVER_ENABLE=1 # 启用 HTTP API（可选）
+      - API_SERVER_HOST=0.0.0.0 # 容器内必须监听 0.0.0.0 才能对外暴露
+      # - OPEN_XIAOAI_TOKEN=your-secret-token # 与音箱端 token.txt 一致（可选）
+    volumes:
+      # 配置文件（含 ha.token / 豆包 api_key 等敏感信息，不入镜像）
+      - ./config.py:/app/open-xiaoai-server/config.py
+      # 模型目录：VAD + KWS + Paraformer ASR（见 README 模型文件一节）
+      - ./core/models:/app/open-xiaoai-server/core/models
+    stdin_open: true
+    tty: true
