@@ -223,6 +223,13 @@ class XiaoAI:
                     elif text and is_final:
                         logger.info(f"[XiaoAI] 🔥 收到指令: {text}")
                         cls.conversation.reset_retries()
+                        # 桥接接管的指令（开启/退出连续对话等）压掉小爱原生回复，
+                        # 避免原生大脑回一句“抱歉，暂不支持该功能”
+                        if cls.conversation.should_intercept_command(text):
+                            await cls._suppress_dialog(
+                                dialog_id,
+                                "Bridge 接管指令",
+                            )
                         await cls.conversation.handle_text_command(
                             text,
                             get_speaker(),

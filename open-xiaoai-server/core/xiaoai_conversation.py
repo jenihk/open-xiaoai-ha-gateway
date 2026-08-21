@@ -29,6 +29,16 @@ class XiaoAIConversationController:
     def reset_retries(self):
         self.current_retries = 0
 
+    def should_intercept_command(self, text: str) -> bool:
+        """这些指令由 Bridge 接管，需要压掉小爱原生回复。"""
+        if any(keyword in text for keyword in self.continuous_conversation_keywords):
+            return True
+        if self.is_active() and any(
+            cmd in text for cmd in self.exit_command_keywords
+        ):
+            return True
+        return False
+
     def is_active(self) -> bool:
         return self.conversing or self.current_retries > 0
 
@@ -47,6 +57,7 @@ class XiaoAIConversationController:
         if any(keyword in text for keyword in self.continuous_conversation_keywords):
             logger.info("[XiaoAI] 👋 收到开启连续对话指令，开启连续对话模式")
             self.conversing = True
+            await speaker.play(text="已开启连续对话")
 
     async def handle_listening_timeout(self, speaker):
         if not (
