@@ -88,7 +88,7 @@ class XiaoAI:
         cls._suppressed_dialog_last_attempt[dialog_id] = now
         try:
             await cls.speaker.run_shell(
-                "killall tts_play.sh miplayer 2>/dev/null; mphelper pause"
+                "killall -9 tts_play.sh miplayer 2>/dev/null; mphelper pause"
             )
             if is_new_dialog:
                 await cls.speaker.wake_up(awake=False)
@@ -213,6 +213,12 @@ class XiaoAI:
                         logger.wakeup("小爱同学", module="XiaoAI")
                         cls.conversation.reset_retries()
                         EventManager.on_interrupt()
+                    elif text and not is_final and cls.conversation.should_intercept_command(text):
+                        # 部分识别结果已包含接管指令：提前抑制，抢在原生 TTS 开播前
+                        await cls._suppress_dialog(
+                            dialog_id,
+                            "Bridge 提前接管指令",
+                        )
                     elif text and is_final and cls._is_external_wakeup_text(text):
                         await cls._suppress_dialog(
                             dialog_id,

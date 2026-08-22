@@ -1,3 +1,5 @@
+import asyncio
+
 from core.utils.logger import logger
 
 
@@ -108,6 +110,8 @@ class XiaoAIConversationController:
         ):
             return
 
+        # 稍等片刻再重新唤醒，避免刚播完的 TTS 尾巴被麦克风复听
+        await asyncio.sleep(0.6)
         await speaker.wake_up(awake=True, silent=False)
         self.current_retries = 1
         logger.info(
